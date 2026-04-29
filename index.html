@@ -579,7 +579,7 @@
       <header class="topbar">
         <div class="hello">
           <h2>¡Hola, Familia Pérez!</h2>
-          <p>Hoy es lunes, 11 de marzo</p>
+          <p id="fechaActual"></p>
         </div>
         <div class="toolbar">
           <div class="search">
@@ -854,6 +854,33 @@
     const menuBtn = document.getElementById('menuBtn');
     const overlay = document.getElementById('overlay');
     const toast = document.getElementById('toast');
+
+    <script>
+    function actualizarFechaActual() {
+    const fecha = new Date();
+
+    const opciones = {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long'
+    };
+
+    let fechaTexto = fecha.toLocaleDateString('es-CO', opciones);
+
+    fechaTexto = fechaTexto.charAt(0).toUpperCase() + fechaTexto.slice(1);
+
+    const elementoFecha = document.getElementById('fechaActual');
+
+    if (elementoFecha) {
+      elementoFecha.textContent = `Hoy es ${fechaTexto}`;
+    }
+  }
+
+    actualizarFechaActual();
+
+    const loginView = document.getElementById('loginView');
+    const appView = document.getElementById('appView');
+    const loginBtn = document.getElementById('loginBtn');
 
     const family = [
       { name: 'Ana Perez - Mamá', short: 'Mamá', role: 'Familia mamá', email: 'ana.perez@gmail.com', emoji: '👩', active: true },

@@ -494,47 +494,19 @@
       .metrics-line { grid-template-columns: 1fr; }
       .app-shell { padding: 12px; gap: 12px; }
     }
-    .brand-logo,
-.avatar,
-.emoji-avatar {
-  overflow: hidden;
-}
+      .brand-logo,
+      .avatar,
+      .emoji-avatar { overflow: hidden;}
 
-.brand-logo img {
-  width: 82%;
-  height: 82%;
-  object-fit: contain;
-  display: block;
-}
+      .brand-logo img { width: 82%; height: 82%; object-fit: contain; display: block; }
 
-.avatar img,
-.emoji-avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: inherit;
-  display: block;
-}
+      .avatar img,
+      .emoji-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; display: block; }
 
-.choice-img {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  object-fit: cover;
-  vertical-align: middle;
-  margin-right: 6px;
-}
-    .emoji-avatar {
-  overflow: hidden;
-}
+      .choice-img { width: 22px; height: 22px; border-radius: 50%; object-fit: cover; vertical-align: middle; margin-right: 6px; }
+      .emoji-avatar { overflow: hidden; }
 
-.emoji-avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: inherit;
-  display: block;
-}
+      .emoji-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; display: block; }
   </style>
 </head>
 <body>
@@ -545,8 +517,8 @@
     <div class="login-panel">
       <div class="login-title">
         <div class="brand-logo">
-  <img src="img/logotipo.png" alt="Logotipo MiHogar al Día">
-</div>
+          <img src="img/logotipo.png" alt="Logotipo MiHogar al Día">
+      </div>
         <h1>MiHogar al Día</h1>
       </div>
 
@@ -633,8 +605,8 @@
           </div>
           <button class="circle-btn" aria-label="Notificaciones"><span class="dot"></span><svg class="small-icon" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 6 3 8H3c0-2 3-1 3-8"></path><path d="M10 20a2 2 0 0 0 4 0"></path></svg></button>
           <div class="avatar">
-  <img src="img/mama.png" alt="Usuario">
-</div>
+            <img src="img/mama.png" alt="Usuario">
+          </div>
         </div>
       </header>
 
@@ -801,9 +773,7 @@
             <div>
               <h3>DATOS DEL USUARIO</h3>
               <div style="display:flex; gap:14px; align-items:center; margin-bottom:18px;">
-                <div class="avatar" style="width:80px;height:80px;">
-  <img src="img/mama.png" alt="Usuario">
-</div>
+                <div class="avatar" style="width:80px;height:80px;"><img src="img/mama.png" alt="Usuario"></div>
                 <button class="btn btn-secondary">Upload</button>
               </div>
               <div class="field"><label>Nombre</label><input value="Papá, Familia Perez"></div>
@@ -906,43 +876,11 @@
 
    
     const family = [
-  { 
-    name: 'Ana Perez - Mamá', 
-    short: 'Mamá', 
-    role: 'Familia mamá', 
-    email: 'ana.perez@gmail.com', 
-    emoji: '👩',
-    img: 'img/mama.png',
-    active: true 
-  },
-  { 
-    name: 'Carlos Perez - Papá', 
-    short: 'Papá', 
-    role: 'Familia papá', 
-    email: 'carlos.perez@gmail.com', 
-    emoji: '👨',
-    img: 'img/papa.png',
-    active: true 
-  },
-  { 
-    name: 'Sofia Perez - Hija', 
-    short: 'Sofía', 
-    role: 'Familia hija', 
-    email: 'sofia.perez@gmail.com', 
-    emoji: '👧',
-    img: 'img/hija.png',
-    active: true 
-  },
-  { 
-    name: 'Mateo Perez - Hijo', 
-    short: 'Mateo', 
-    role: 'Familia hijo', 
-    email: 'mateo.perez@gmail.com', 
-    emoji: '🧒',
-    img: 'img/hijo.png',
-    active: true 
-  }
-];
+      { name: 'Ana Perez - Mamá', short: 'Mamá', role: 'Familia mamá', email: 'ana.perez@gmail.com', emoji: '👩',img: 'img/mama.png',active: true },
+      { name: 'Carlos Perez - Papá', short: 'Papá', role: 'Familia papá', email: 'carlos.perez@gmail.com', emoji: '👨',img: 'img/papa.png',active: true },
+      { name: 'Sofia Perez - Hija', short: 'Sofía', role: 'Familia hija', email: 'sofia.perez@gmail.com', emoji: '👧',img: 'img/hija.png',active: true },
+      { name: 'Mateo Perez - Hijo', short: 'Mateo', role: 'Familia hijo', email: 'mateo.perez@gmail.com', emoji: '🧒',img: 'img/hijo.png',active: true }
+    ];
 
     let tasks = [
       { id: 1, title: 'Hacer la compra', description: 'Comprar frutas, verduras y productos del hogar.', responsible: 'Papá', emoji: '🛍️', date: 'Hoy', time: '17:00', priority: 'Alta', status: 'Pendiente', category: 'Compras', urgent: false, completedAt: null },

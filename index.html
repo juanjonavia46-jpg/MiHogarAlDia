@@ -621,7 +621,9 @@
             <input type="text" id="desktopSearch" placeholder="Busca" />
           </div>
           <button class="circle-btn" aria-label="Notificaciones"><span class="dot"></span><svg class="small-icon" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 6 3 8H3c0-2 3-1 3-8"></path><path d="M10 20a2 2 0 0 0 4 0"></path></svg></button>
-          <div class="avatar">👩</div>
+          <div class="avatar">
+  <img src="img/mama.png" alt="Usuario">
+</div>
         </div>
       </header>
 
@@ -788,7 +790,9 @@
             <div>
               <h3>DATOS DEL USUARIO</h3>
               <div style="display:flex; gap:14px; align-items:center; margin-bottom:18px;">
-                <div class="avatar" style="width:80px;height:80px;">👩</div>
+                <div class="avatar" style="width:80px;height:80px;">
+  <img src="img/mama.png" alt="Usuario">
+</div>
                 <button class="btn btn-secondary">Upload</button>
               </div>
               <div class="field"><label>Nombre</label><input value="Papá, Familia Perez"></div>
@@ -891,11 +895,43 @@
 
    
     const family = [
-      { name: 'Ana Perez - Mamá', short: 'Mamá', role: 'Familia mamá', email: 'ana.perez@gmail.com', emoji: '👩', active: true },
-      { name: 'Carlos Perez - Papá', short: 'Papá', role: 'Familia papá', email: 'carlos.perez@gmail.com', emoji: '👨', active: true },
-      { name: 'Sofia Perez - Hija', short: 'Sofía', role: 'Familia hija', email: 'sofia.perez@gmail.com', emoji: '👧', active: true },
-      { name: 'Mateo Perez - Hijo', short: 'Mateo', role: 'Familia hijo', email: 'mateo.perez@gmail.com', emoji: '🧒', active: true }
-    ];
+  { 
+    name: 'Ana Perez - Mamá', 
+    short: 'Mamá', 
+    role: 'Familia mamá', 
+    email: 'ana.perez@gmail.com', 
+    emoji: '👩',
+    img: 'img/mama.png',
+    active: true 
+  },
+  { 
+    name: 'Carlos Perez - Papá', 
+    short: 'Papá', 
+    role: 'Familia papá', 
+    email: 'carlos.perez@gmail.com', 
+    emoji: '👨',
+    img: 'img/papa.png',
+    active: true 
+  },
+  { 
+    name: 'Sofia Perez - Hija', 
+    short: 'Sofía', 
+    role: 'Familia hija', 
+    email: 'sofia.perez@gmail.com', 
+    emoji: '👧',
+    img: 'img/hija.png',
+    active: true 
+  },
+  { 
+    name: 'Mateo Perez - Hijo', 
+    short: 'Mateo', 
+    role: 'Familia hijo', 
+    email: 'mateo.perez@gmail.com', 
+    emoji: '🧒',
+    img: 'img/hijo.png',
+    active: true 
+  }
+];
 
     let tasks = [
       { id: 1, title: 'Hacer la compra', description: 'Comprar frutas, verduras y productos del hogar.', responsible: 'Papá', emoji: '🛍️', date: 'Hoy', time: '17:00', priority: 'Alta', status: 'Pendiente', category: 'Compras', urgent: false, completedAt: null },

@@ -1089,7 +1089,9 @@
       const recent = [...tasks].slice(0, 4);
       els.activityList.innerHTML = recent.map((task, index) => `
         <div class="activity-item">
-          <div class="emoji-avatar">${getResponsibleEmoji(task.responsible)}</div>
+          <div class="emoji-avatar">
+            <img src="${getResponsibleImage(task.responsible)}" alt="${task.responsible}">
+              </div>
           <div><div>${task.responsible} ${task.status === 'Completada' ? 'completó' : 'actualizó'} “${task.title}” <span class="subtle">(hace ${index + 1} h)</span></div></div>
         </div>
       `).join('');
@@ -1133,7 +1135,11 @@
         <tr>
           <td><input type="checkbox" data-task-check="${task.id}"></td>
           <td><div class="task-row"><span style="font-size:1.6rem;">${task.emoji}</span> ${task.title}</div></td>
-          <td><div class="emoji-avatar">${getResponsibleEmoji(task.responsible)}</div></td>
+          <td>
+            <div class="emoji-avatar">
+              <img src="${getResponsibleImage(task.responsible)}" alt="${task.responsible}">
+            </div>
+          </td>
           <td>${task.date}</td>
           <td><span class="priority ${priorityClass(task.priority)}">${task.priority}</span></td>
           <td><span class="status ${statusClass(task.status)}">${task.status}</span></td>
@@ -1241,7 +1247,8 @@
       els.historyTableBody.innerHTML = completed.map(task => `
         <tr>
           <td>${task.title}</td>
-          <td><div class="task-row"><div class="emoji-avatar">${getResponsibleEmoji(task.responsible)}</div> ${task.responsible}</div></td>
+          <td><div class="task-row">
+          <div class="emoji-avatar"><img src="${getResponsibleImage(task.responsible)}" alt="${task.responsible}"></div> ${task.responsible}</div></td>
           <td>${task.completedAt || '-'}</td>
           <td><span class="chip ${task.category === 'Mascotas' ? 'category-pets' : task.urgent ? 'urgent' : 'status-completed'}">${task.category}</span></td>
           <td>${task.urgent ? 'prioridad alta' : 'opcional'}</td>
@@ -1284,7 +1291,7 @@
 
     function renderChoiceButtons() {
       els.responsableChoices.innerHTML = family.map(person => `
-        <button class="choice people ${selectedCreate.responsible === person.short ? 'active-outline' : ''}" data-choice-group="responsible" data-value="${person.short}">${person.emoji} ${person.short}</button>
+        <button class="choice people ${selectedCreate.responsible === person.short ? 'active-outline' : ''}" data-choice-group="responsible" data-value="${person.short}"><img src="${person.img}" alt="${person.short}" class="choice-img"> ${person.short}</button>
       `).join('');
       els.categoriaChoices.innerHTML = categories.map(cat => `
         <button class="choice people ${selectedCreate.category === cat.name ? 'active-outline' : ''}" data-choice-group="category" data-value="${cat.name}">${cat.emoji} ${cat.name}</button>

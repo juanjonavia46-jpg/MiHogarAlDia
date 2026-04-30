@@ -507,6 +507,44 @@
       .emoji-avatar { overflow: hidden; }
 
       .emoji-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; display: block; }
+
+    .notification-wrap {
+  position: relative;
+}
+
+.notification-panel {
+  position: absolute;
+  top: 70px;
+  right: 0;
+  width: 310px;
+  background: rgba(255, 255, 255, .96);
+  border: 1px solid rgba(17,24,39,.08);
+  box-shadow: var(--shadow);
+  border-radius: 18px;
+  padding: 18px;
+  z-index: 50;
+  animation: floatUp .25s ease;
+}
+
+.notification-panel h4 {
+  margin: 0 0 8px;
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
+.notification-panel p {
+  margin: 0;
+  color: var(--muted);
+  font-size: .95rem;
+}
+
+body.theme-dark .notification-panel {
+  background: rgba(17,24,39,.96);
+  border-color: rgba(255,255,255,.08);
+}
+
+
+    
   </style>
 </head>
 <body>
@@ -603,7 +641,16 @@
             <svg class="small-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
             <input type="text" id="desktopSearch" placeholder="Busca" />
           </div>
-          <button class="circle-btn" aria-label="Notificaciones"><span class="dot"></span><svg class="small-icon" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 6 3 8H3c0-2 3-1 3-8"></path><path d="M10 20a2 2 0 0 0 4 0"></path></svg></button>
+
+          <div class="notification-wrap"><button class="circle-btn" aria-label="Notificaciones" id="notificationBtn"><span class="dot"></span><svg class="small-icon" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 6 3 8H3c0-2 3-1 3-8"></path><path d="M10 20a2 2 0 0 0 4 0"></path></svg></button>
+            <div class="notification-panel hidden" id="notificationPanel"><h4>Notificaciones</h4><p>No tienes notificaciones nuevas.</p></div>
+          </div>
+
+
+
+
+
+          
           <div class="avatar">
             <img src="img/mama.png" alt="Usuario">
           </div>
@@ -873,6 +920,8 @@
     const menuBtn = document.getElementById('menuBtn');
     const overlay = document.getElementById('overlay');
     const toast = document.getElementById('toast');
+    const notificationBtn = document.getElementById('notificationBtn');
+    const notificationPanel = document.getElementById('notificationPanel');
 
    
     const family = [
@@ -1447,7 +1496,24 @@
       const mes = meses[fecha.getMonth()];
 
       fechaActual.textContent = `Hoy es ${diaSemana}, ${dia} de ${mes}`;
-  }
+    }
+
+    if (notificationBtn && notificationPanel) {
+      notificationBtn.addEventListener('click', function(event) {
+      event.stopPropagation();
+      notificationPanel.classList.toggle('hidden');
+    });
+
+      notificationPanel.addEventListener('click', function(event) {
+      event.stopPropagation();
+    });
+
+      document.addEventListener('click', function() {
+      notificationPanel.classList.add('hidden');
+    });
+    }
+
+    
 
 
     

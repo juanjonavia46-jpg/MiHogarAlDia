@@ -223,9 +223,13 @@
       background: linear-gradient(135deg, #ffd57d, #ffb68e); display: grid; place-items: center; font-size: 2rem;
     }
 
-    .page {
-      display: none; min-height: 0; overflow: auto; padding-right: 6px; animation: floatUp .45s ease;
+    .page { 
+      display: none; min-height: 0; max-height: calc(100vh - 130px); overflow-y: auto; overflow-x: hidden; padding-right: 10px; animation: floatUp .45s ease;
     }
+    .page::-webkit-scrollbar { width: 10px; }
+    .page::-webkit-scrollbar-track { background: transparent; }
+    .page::-webkit-scrollbar-thumb { background: rgba(71, 85, 105, .28); border-radius: 999px;}
+    .page::-webkit-scrollbar-thumb:hover { background: rgba(71, 85, 105, .45);}
     .page.active { display: block; }
     .page::-webkit-scrollbar { width: 10px; }
     .page::-webkit-scrollbar-thumb { background: rgba(71,85,105,.22); border-radius: 999px; }
@@ -517,11 +521,155 @@
 
       body.theme-dark .notification-panel { background: rgba(17,24,39,.96); border-color: rgba(255,255,255,.08); }
     
+      .family-action { border: 0; background: transparent; color: var(--muted); cursor: pointer; padding: 0; font-size: .95rem; }
+
+      .family-action:hover { color: var(--primary); text-decoration: underline; }
+
+      .family-action.danger { color: #d66a55; }
+
+      .family-action.danger:hover { color: #b84d3a; }
+    /* Ajustes finales limpios */
+    .brand-logo, .avatar, .emoji-avatar { overflow: hidden; }
+    .brand-logo img { width: 82%; height: 82%; object-fit: contain; display: block; }
+    .avatar img, .emoji-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; display: block; }
+    .choice-img { width: 22px; height: 22px; border-radius: 50%; object-fit: cover; vertical-align: middle; margin-right: 6px; }
+    .notification-wrap { position: relative; }
+    .notification-panel { position: absolute; top: 70px; right: 0; width: 310px; background: rgba(255,255,255,.96); border: 1px solid rgba(17,24,39,.08); box-shadow: var(--shadow); border-radius: 18px; padding: 18px; z-index: 50; animation: floatUp .25s ease; }
+    .notification-panel h4 { margin: 0 0 8px; font-size: 1.15rem; font-weight: 800; }
+    .notification-panel p { margin: 0; color: var(--muted); font-size: .95rem; }
+    body.theme-dark .notification-panel { background: rgba(17,24,39,.96); border-color: rgba(255,255,255,.08); }
+    .family-action { border: 0; background: transparent; color: var(--muted); cursor: pointer; padding: 0; font-size: .95rem; }
+    .family-action:hover { color: var(--primary); text-decoration: underline; }
+    .family-action.danger { color: #d66a55; }
+    .family-action.danger:hover { color: #b84d3a; }
+    .preview-card { max-width: 390px; }
+
+
+    .family-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, .45);
+      display: grid;
+      place-items: center;
+      z-index: 120;
+      padding: 24px;
+      animation: fadeIn .2s ease;
+    }
+
+    .family-modal-card {
+      width: min(520px, 92vw);
+      background: rgba(255,255,255,.98);
+      border: 1px solid rgba(17,24,39,.08);
+      border-radius: 26px;
+      box-shadow: var(--shadow);
+      padding: 24px;
+      position: relative;
+      animation: floatUp .25s ease;
+    }
+
+    .family-modal-close {
+      position: absolute;
+      top: 14px;
+      right: 16px;
+      width: 38px;
+      height: 38px;
+      border: 0;
+      border-radius: 50%;
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-size: 1.45rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .family-modal-head {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 18px;
+      padding-right: 36px;
+    }
+
+    .family-modal-avatar {
+      width: 86px;
+      height: 86px;
+      border-radius: 24px;
+      flex: 0 0 auto;
+    }
+
+    .family-modal-head h3 {
+      margin: 0 0 6px;
+      font-size: 1.7rem;
+      line-height: 1.05;
+      letter-spacing: -.04em;
+    }
+
+    .family-modal-head p {
+      margin: 0;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .family-modal-info {
+      display: grid;
+      gap: 12px;
+      margin: 18px 0 22px;
+    }
+
+    .family-modal-info div {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      background: var(--primary-soft);
+      border-radius: 16px;
+      padding: 14px 16px;
+    }
+
+    .family-modal-info span {
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .family-modal-info strong {
+      text-align: right;
+    }
+
+    body.theme-dark .family-modal-card {
+      background: rgba(17,24,39,.98);
+      border-color: rgba(255,255,255,.08);
+    }
+
+    body.theme-dark .family-modal-info div,
+    body.theme-dark .family-modal-close {
+      background: rgba(91,140,255,.14);
+    }
+  
   </style>
 </head>
 <body>
   <div class="overlay" id="overlay"></div>
   <div class="toast" id="toast">Acción realizada</div>
+
+  <div class="family-modal hidden" id="familyViewModal">
+    <div class="family-modal-card">
+      <button class="family-modal-close" id="closeFamilyViewModal" aria-label="Cerrar">×</button>
+      <div class="family-modal-head">
+        <div class="emoji-avatar family-modal-avatar">
+          <img id="modalFamilyImg" src="img/logotipo.png" alt="Integrante">
+        </div>
+        <div>
+          <h3 id="modalFamilyName">Integrante</h3>
+          <p id="modalFamilyRole">Rol familiar</p>
+        </div>
+      </div>
+      <div class="family-modal-info">
+        <div><span>Correo</span><strong id="modalFamilyEmail">correo@familia.com</strong></div>
+        <div><span>Estado</span><strong id="modalFamilyStatus">Activo</strong></div>
+        <div><span>Tareas asignadas</span><strong id="modalFamilyTasks">0</strong></div>
+      </div>
+      <button class="btn btn-primary" id="modalFamilyOkBtn">Aceptar</button>
+    </div>
+  </div>
 
   <section id="loginView" class="login-shell">
     <div class="login-panel">
@@ -764,6 +912,7 @@
         <div class="section-head">
           <h2 class="section-title">Mi familia</h2>
           <div class="actions">
+            <button class="btn btn-primary" id="addFamilyBtn">Nuevo integrante</button>
             <button class="btn btn-primary" data-page="inicio">Volver</button>
             <button class="btn btn-secondary" id="familyReportBtn">Generar reporte</button>
           </div>
@@ -778,6 +927,74 @@
             <h3 style="margin-top:0; font-size:1.9rem; line-height:1.05; letter-spacing:-.03em;">Resumen de responsabilidades</h3>
             <div class="list" id="familySummary" style="margin-top:18px; gap:12px;"></div>
           </article>
+        </div>
+      </section>
+
+      <section class="page" id="page-integrante">
+        <div class="section-head">
+          <h2 class="section-title" id="familyFormTitle">Nuevo integrante</h2>
+          <div class="actions">
+            <button class="btn btn-primary" data-page="familia">Volver</button>
+          </div>
+        </div>
+
+        <div class="form-card">
+          <div class="create-layout">
+            <div>
+              <div class="field">
+                <label>Nombre completo</label>
+                <input id="familyNameInput" placeholder="Ej. Laura Pérez - Tía">
+              </div>
+
+              <div class="field" style="margin-top:16px;">
+                <label>Nombre corto</label>
+                <input id="familyShortInput" placeholder="Ej. Laura, Tía, Abuelo">
+              </div>
+
+              <div class="field" style="margin-top:16px;">
+                <label>Rol dentro de la familia</label>
+                <input id="familyRoleInput" placeholder="Ej. Familia tía">
+              </div>
+            </div>
+
+            <div>
+              <div class="field">
+                <label>Correo</label>
+                <input id="familyEmailInput" placeholder="correo@familia.com">
+              </div>
+
+              <div class="field" style="margin-top:16px;">
+                <label>Imagen del integrante</label>
+                <select id="familyImgInput">
+                  <option value="img/mama.png">Mamá</option>
+                  <option value="img/papa.png">Papá</option>
+                  <option value="img/hija.png">Hija</option>
+                  <option value="img/hijo.png">Hijo</option>
+                  <option value="img/logotipo.png">Logo / genérico</option>
+                </select>
+              </div>
+
+              <div style="margin-top:18px;">
+                <h3 style="margin-bottom:10px;">Vista previa</h3>
+                <div class="person-card preview-card">
+                  <div class="emoji-avatar">
+                    <img id="familyPreviewImg" src="img/logotipo.png" alt="Vista previa">
+                  </div>
+                  <div class="person-meta">
+                    <h4 id="familyPreviewName">Nuevo integrante</h4>
+                    <div class="muted" id="familyPreviewRole">Rol familiar</div>
+                    <div class="subtle" id="familyPreviewEmail">correo@familia.com</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="footer-actions">
+            <button class="btn btn-primary" id="saveFamilyMemberBtn">Guardar integrante</button>
+            <button class="btn btn-secondary" id="clearFamilyFormBtn">Limpiar</button>
+            <button class="btn btn-secondary" data-page="familia">Cancelar</button>
+          </div>
         </div>
       </section>
 
@@ -921,6 +1138,7 @@
     ];
 
     let currentDetailId = null;
+    let currentFamilyEditShort = null;
     let selectedCreate = { responsible: 'Mamá', category: 'Compras', priority: 'Alta', status: 'Pendiente' };
     let savedSettings = { font: 16, hue: 217, theme: 'light' };
 
@@ -971,7 +1189,19 @@
       historyCategory: document.getElementById('historyCategory'),
       desktopSearch: document.getElementById('desktopSearch'),
       mobileSearch: document.getElementById('mobileSearch'),
-      selectAllTasks: document.getElementById('selectAllTasks')
+      selectAllTasks: document.getElementById('selectAllTasks'),
+      familyFormTitle: document.getElementById('familyFormTitle'),
+      familyNameInput: document.getElementById('familyNameInput'),
+      familyShortInput: document.getElementById('familyShortInput'),
+      familyRoleInput: document.getElementById('familyRoleInput'),
+      familyEmailInput: document.getElementById('familyEmailInput'),
+      familyImgInput: document.getElementById('familyImgInput'),
+      familyPreviewImg: document.getElementById('familyPreviewImg'),
+      familyPreviewName: document.getElementById('familyPreviewName'),
+      familyPreviewRole: document.getElementById('familyPreviewRole'),
+      familyPreviewEmail: document.getElementById('familyPreviewEmail'),
+      saveFamilyMemberBtn: document.getElementById('saveFamilyMemberBtn'),
+      clearFamilyFormBtn: document.getElementById('clearFamilyFormBtn')
     };
 
     function showToast(message) {
@@ -1235,21 +1465,27 @@
         return `
           <article class="person-card">
             <div class="emoji-avatar">
-  <img src="${person.img}" alt="${person.short}">
-</div>
+              <img src="${person.img || 'img/logotipo.png'}" alt="${person.short}">
+            </div>
             <div class="person-meta">
               <h4>${person.name}</h4>
               <div>${person.role}</div>
               <div class="subtle">${person.email}</div>
               <div style="margin:10px 0;">${count} tareas</div>
               <span class="status status-done" style="min-width:auto; padding-inline:14px;">Estado: ${person.active ? 'Activo' : 'Inactivo'}</span>
-              <div class="subtle" style="margin-top:12px; display:flex; gap:16px;"><span>👁 Ver</span><span>✏ Editar</span><span style="color:#d66a55">Eliminar</span></div>
+              <div class="subtle" style="margin-top:12px; display:flex; gap:16px;">
+                <button class="family-action" data-family-action="view" data-family-short="${person.short}">👁 Ver</button>
+                <button class="family-action" data-family-action="edit" data-family-short="${person.short}">✏ Editar</button>
+                <button class="family-action danger" data-family-action="delete" data-family-short="${person.short}">Eliminar</button>
+              </div>
             </div>
           </article>
         `;
       }).join('');
 
-      els.familySummary.innerHTML = family.map(person => `<div>${person.short}: ${tasks.filter(t => t.responsible === person.short).length} tareas</div>`).join('');
+      els.familySummary.innerHTML = family
+        .map(person => `<div>${person.short}: ${tasks.filter(t => t.responsible === person.short).length} tareas</div>`)
+        .join('');
     }
 
     function renderChoiceButtons() {
@@ -1345,6 +1581,142 @@
       applyHue(savedSettings.hue);
       applyTheme(savedSettings.theme);
     }
+    function getFamilyMember(shortName) {
+      return family.find(person => person.short === shortName);
+    }
+
+    function viewFamilyMember(shortName) {
+      const person = getFamilyMember(shortName);
+      if (!person) {
+        showToast('No se encontró el integrante');
+        return;
+      }
+      const count = tasks.filter(task => task.responsible === person.short).length;
+      const modal = document.getElementById('familyViewModal');
+      document.getElementById('modalFamilyImg').src = person.img || 'img/logotipo.png';
+      document.getElementById('modalFamilyName').textContent = person.name;
+      document.getElementById('modalFamilyRole').textContent = person.role;
+      document.getElementById('modalFamilyEmail').textContent = person.email;
+      document.getElementById('modalFamilyStatus').textContent = person.active ? 'Activo' : 'Inactivo';
+      document.getElementById('modalFamilyTasks').textContent = count;
+      modal.classList.remove('hidden');
+    }
+
+    function closeFamilyViewModal() {
+      const modal = document.getElementById('familyViewModal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function openFamilyForm(shortName = null) {
+      currentFamilyEditShort = shortName;
+      if (shortName) {
+        const person = getFamilyMember(shortName);
+        if (!person) {
+          showToast('No se encontró el integrante');
+          return;
+        }
+        els.familyFormTitle.textContent = 'Editar integrante';
+        els.familyNameInput.value = person.name;
+        els.familyShortInput.value = person.short;
+        els.familyRoleInput.value = person.role;
+        els.familyEmailInput.value = person.email;
+        els.familyImgInput.value = person.img || 'img/logotipo.png';
+      } else {
+        clearFamilyForm(false);
+      }
+      updateFamilyPreview();
+      setActivePage('integrante');
+    }
+
+    function updateFamilyPreview() {
+      if (!els.familyPreviewImg) return;
+      const name = els.familyNameInput.value.trim() || 'Nuevo integrante';
+      const role = els.familyRoleInput.value.trim() || 'Rol familiar';
+      const email = els.familyEmailInput.value.trim() || 'correo@familia.com';
+      const img = els.familyImgInput.value || 'img/logotipo.png';
+      els.familyPreviewName.textContent = name;
+      els.familyPreviewRole.textContent = role;
+      els.familyPreviewEmail.textContent = email;
+      els.familyPreviewImg.src = img;
+    }
+
+    function saveFamilyMember() {
+      const name = els.familyNameInput.value.trim();
+      const short = els.familyShortInput.value.trim();
+      const role = els.familyRoleInput.value.trim();
+      const email = els.familyEmailInput.value.trim();
+      const img = els.familyImgInput.value || 'img/logotipo.png';
+      if (!name || !short) {
+        showToast('Escribe al menos el nombre completo y el nombre corto');
+        return;
+      }
+      const duplicate = family.some(person => person.short.toLowerCase() === short.toLowerCase() && person.short !== currentFamilyEditShort);
+      if (duplicate) {
+        showToast('Ya existe un integrante con ese nombre corto');
+        return;
+      }
+      if (currentFamilyEditShort) {
+        const person = getFamilyMember(currentFamilyEditShort);
+        if (!person) {
+          showToast('No se encontró el integrante');
+          return;
+        }
+        tasks.forEach(task => {
+          if (task.responsible === person.short) task.responsible = short;
+        });
+        person.name = name;
+        person.short = short;
+        person.role = role || `Familia ${short.toLowerCase()}`;
+        person.email = email || 'sin-correo@familia.com';
+        person.img = img;
+        showToast('Integrante actualizado');
+      } else {
+        family.push({
+          name,
+          short,
+          role: role || `Familia ${short.toLowerCase()}`,
+          email: email || 'sin-correo@familia.com',
+          emoji: '👤',
+          img,
+          active: true
+        });
+        showToast('Nuevo integrante agregado');
+      }
+      currentFamilyEditShort = null;
+      renderAll();
+      setActivePage('familia');
+    }
+
+    function clearFamilyForm(resetEdit = true) {
+      if (resetEdit) currentFamilyEditShort = null;
+      if (!els.familyFormTitle) return;
+      els.familyFormTitle.textContent = 'Nuevo integrante';
+      els.familyNameInput.value = '';
+      els.familyShortInput.value = '';
+      els.familyRoleInput.value = '';
+      els.familyEmailInput.value = '';
+      els.familyImgInput.value = 'img/logotipo.png';
+      updateFamilyPreview();
+    }
+
+    function deleteFamilyMember(shortName) {
+      const personIndex = family.findIndex(person => person.short === shortName);
+      if (personIndex === -1) {
+        showToast('No se encontró el integrante');
+        return;
+      }
+      const person = family[personIndex];
+      const hasTasks = tasks.some(task => task.responsible === person.short);
+      if (hasTasks) {
+        alert('No puedes eliminar este integrante porque tiene tareas asignadas. Primero cambia o elimina esas tareas.');
+        return;
+      }
+      const confirmDelete = confirm(`¿Seguro que deseas eliminar a ${person.name}?`);
+      if (!confirmDelete) return;
+      family.splice(personIndex, 1);
+      renderAll();
+      showToast('Integrante eliminado');
+    }
 
     function renderAll() {
       populateResponsibleFilters();
@@ -1365,6 +1737,24 @@
     overlay.addEventListener('click', closeSidebar);
 
     document.addEventListener('click', (e) => {
+
+        const addFamilyButton = e.target.closest('#addFamilyBtn');
+      if (addFamilyButton) {
+        openFamilyForm();
+        return;
+      }
+
+  const familyBtn = e.target.closest('[data-family-action]');
+  if (familyBtn) {
+    const action = familyBtn.dataset.familyAction;
+    const shortName = familyBtn.dataset.familyShort;
+
+    if (action === 'view') viewFamilyMember(shortName);
+    if (action === 'edit') openFamilyForm(shortName);
+    if (action === 'delete') deleteFamilyMember(shortName);
+
+    return;
+  }
       const btn = e.target.closest('[data-action]');
       if (btn) {
         const id = Number(btn.dataset.id);
@@ -1430,7 +1820,36 @@
     document.getElementById('generateReportBtn').addEventListener('click', () => showToast('Reporte generado (demo)'));
     document.getElementById('familyReportBtn').addEventListener('click', () => showToast('Reporte familiar generado (demo)'));
 
-    restoreSettings();
+    if (els.saveFamilyMemberBtn) {
+      els.saveFamilyMemberBtn.addEventListener('click', saveFamilyMember);
+    }
+
+    if (els.clearFamilyFormBtn) {
+      els.clearFamilyFormBtn.addEventListener('click', () => {
+        clearFamilyForm();
+        showToast('Formulario de integrante limpio');
+      });
+    }
+
+    [els.familyNameInput, els.familyShortInput, els.familyRoleInput, els.familyEmailInput, els.familyImgInput].forEach(input => {
+      if (input) {
+        input.addEventListener('input', updateFamilyPreview);
+        input.addEventListener('change', updateFamilyPreview);
+      }
+    });
+
+    const closeFamilyViewModalBtn = document.getElementById('closeFamilyViewModal');
+    const modalFamilyOkBtn = document.getElementById('modalFamilyOkBtn');
+    const familyViewModal = document.getElementById('familyViewModal');
+
+    if (closeFamilyViewModalBtn) closeFamilyViewModalBtn.addEventListener('click', closeFamilyViewModal);
+    if (modalFamilyOkBtn) modalFamilyOkBtn.addEventListener('click', closeFamilyViewModal);
+    if (familyViewModal) {
+      familyViewModal.addEventListener('click', (e) => {
+        if (e.target === familyViewModal) closeFamilyViewModal();
+      });
+    }
+restoreSettings();
     clearCreateForm();
 
     const fechaActual = document.getElementById('fechaActual');

@@ -1,6 +1,6 @@
 # MiHogarAlDia
 
-MiHogar al Día es un prototipo web ligero para organizar tareas, recordatorios y actividades familiares. Fue desarrollado como una propuesta funcional con enfoque TRL5, orientada a mejorar la planificación y el seguimiento de compromisos dentro del hogar.
+MiHogar al Día es un prototipo web ligero para organizar tareas, recordatorios y actividades familiares, fue desarrollado como una propuesta funcional con enfoque TRL5, orientada a mejorar la planificación y el seguimiento de compromisos dentro del hogar.
 
 ## Funcionalidades principales
 

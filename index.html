@@ -1059,6 +1059,10 @@
       const person = family.find(f => f.short === name || f.name.includes(name));
       return person ? person.emoji : '👤';
     }
+    function getResponsibleImage(name) {
+      const person = family.find(f => f.short === name || f.name.includes(name));
+      return person ? person.img : 'img/logotipo.png';
+    }
 
     function calculateStats() {
       return {
